@@ -1,0 +1,108 @@
+<div class="container">
+
+  <div>
+    <button  class="btn ms-2 btn-info me-2" (click)="goBack()"> <i class="fas fa-chevron-left"></i></button>
+    <button class="btn btn-danger" (click)="deleteData()"><i class="fa-solid fa-trash"> </i> </button>
+
+  </div>
+
+  <mat-card class="customer-card" *ngIf="customer">
+
+    <mat-card-header>
+      <!-- <div class="row w-100"> -->
+        <!-- <div class="col-8"> -->
+          <div>
+            <mat-card-title class="text-white" *ngIf="customer.name ">{{ customer.name }}</mat-card-title>
+            <mat-card-subtitle class="text-white" *ngIf="customer.company_name">{{ customer.company_name }}</mat-card-subtitle>
+
+          </div>
+
+        <!-- </div> -->
+        <div  >
+          <img *ngIf="customer.image; else noImage" [src]="url+customer.image" class="img-fluid" alt="">
+          <ng-template #noImage>
+            <!-- Placeholder image or alternative content -->
+            <!-- <img src="path/to/placeholder.jpg" alt="No Image"> -->
+            <i class="fa-regular  fa-user"></i>
+        </ng-template>
+
+        </div>
+      <!-- </div> -->
+
+
+
+    </mat-card-header>
+    <mat-card-content>
+
+
+      <div class="info-group" *ngIf="customer.mobile_no">
+        <mat-icon>phone</mat-icon>
+        <span>{{ customer.mobile_no }}</span>
+      </div>
+      <div class="info-group" *ngIf="customer.email">
+        <mat-icon>email</mat-icon>
+        <span>{{ customer.email }}</span>
+      </div>
+      <div class="info-group" *ngIf="customer.date_of_birth">
+        <mat-icon>cake</mat-icon>
+        <span>Date of Birth: {{ customer.date_of_birth }}</span>
+      </div>
+      <div class="info-group" *ngIf="customer.anniversary_date">
+        <mat-icon>event</mat-icon>
+        <span>Anniversary: {{ customer.anniversary_date }}</span>
+      </div>
+      <div class="info-group" *ngIf="customer.credit_limit !== undefined">
+        <mat-icon>credit_card</mat-icon>
+        <span>Credit Limit: ${{ customer.credit_limit }}</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="bank-card" *ngFor="let bank of customer?.bank_id">
+    <mat-card-header>
+      <mat-card-title class="text-white" *ngIf="bank?.bank_name ">{{ bank.bank_name }}</mat-card-title>
+      <mat-card-subtitle class="text-white" *ngIf="bank?.branch_name">{{ bank.branch_name }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="info-group" *ngIf="bank?.account_no">
+        <mat-icon>account_balance</mat-icon>
+        <span>Account No: {{ bank.account_no }}</span>
+      </div>
+      <div class="info-group" *ngIf="bank?.account_holder_name">
+        <mat-icon>person</mat-icon>
+        <span>Holder: {{ bank.account_holder_name }}</span>
+      </div>
+      <div class="info-group" *ngIf="bank?.bank_ifsc_code">
+        <mat-icon>code</mat-icon>
+        <span>IFSC: {{ bank.bank_ifsc_code }}</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="address-card" *ngIf="customer?.address && customer.address.length > 0">
+    <mat-card-header class="text-white">
+      <mat-card-title class="text-white">Address</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="info-group" *ngIf="customer.address[0].address_line_1">
+        <mat-icon>location_on</mat-icon>
+        <span>{{ customer.address[0].address_line_1 }}</span>
+      </div>
+      <div class="info-group" *ngIf="customer.address[0].address_line_2">
+        <mat-icon>place</mat-icon>
+        <span>{{ customer.address[0].address_line_2 }}</span>
+      </div>
+      <div class="info-group" *ngIf="customer.address[0].country">
+        <mat-icon>flag</mat-icon>
+        <span>{{ customer.address[0].country }}</span>
+      </div>
+      <div class="info-group" *ngIf="customer.address[0].state && customer.address[0].city">
+        <mat-icon>map</mat-icon>
+        <span>{{ customer.address[0].state }}, {{ customer.address[0].city }} - {{ customer.address[0].pincode }}</span>
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

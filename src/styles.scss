@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~@fortawesome/fontawesome-free/css/all.css';
+/* styles.scss */
+// @import '~ngx-spinner/animations/ball-atom.css';
+// @import '~ngx-spinner/styles.css';
+
+// styles.scss or create-new-party.component.scss
+::ng-deep .ngx-spinner-overlay {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+::ng-deep .ngx-spinner {
+  color: #fff;
+}

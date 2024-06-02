@@ -1,0 +1,90 @@
+<div class="container  pt-2 p-4">
+
+
+  <div class="container pt-2 p-2">
+    <div class="d-flex justify-content-between align-items-center mt-5 p-2">
+      <div>
+        <button class="btn btn-primary  btn-sm" mat-button routerLink="/dashboard/create-party">
+          <i class="fa-solid fa-plus"></i> Create New
+        </button>
+      </div>
+      <div class="flex-grow-1 m-3">
+        <input class="form-control" matInput (keyup)="applyFilter($event)" placeholder="Search">
+      </div>
+      <div>
+        <button (click)="logout()" class="btn btn-danger btn-sm" mat-button>
+          <i class="fa-solid fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <div class="mat-elevation-z8">
+
+        <div class="table-responsive">
+          <table class="table" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+                <td mat-cell *matCellDef="let element" (click)="navigate(element.id)">{{ element.id }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="name" >
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                <td mat-cell *matCellDef="let element"(click)="navigate(element.id)">{{ element.name }}</td>
+              </ng-container>
+              <ng-container matColumnDef="image">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
+                <td mat-cell *matCellDef="let element" (click)="navigate(element.id)">
+                    <ng-container *ngIf="element.image; else noImage">
+                        <img [src]="url + element.image" alt="">
+                    </ng-container>
+                    <ng-template #noImage>
+
+                        <i class="fa-regular  fa-user"></i>
+                    </ng-template>
+                </td>
+            </ng-container>
+
+
+              <ng-container matColumnDef="company_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Company</th>
+                <td mat-cell *matCellDef="let element" (click)="navigate(element.id)">{{ element.company_name }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                <td mat-cell *matCellDef="let element" (click)="navigate(element.id)">{{ element.email }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="mobile_no">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</th>
+                <td mat-cell *matCellDef="let element" (click)="navigate(element.id)">{{ element.mobile_no }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="is_active" >
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Active</th>
+                <td mat-cell *matCellDef="let element" (click)="navigate(element.id)">{{ element.is_active }}</td>
+              </ng-container>
+            <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Edit</th>
+
+              <button></button>
+              <td mat-cell *matCellDef="let element" [routerLink]="['/dashboard/edit-post', element.id]"><i class="fa-solid fa-pencil"></i></td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete</th>
+
+              <td mat-cell *matCellDef="let element" (click)="deleteData(element.id)"> <i class="fa-solid fa-trash"></i></td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="container-fluid pt-4">
+  <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+    <div class="row">
+        <div class=" col-md-6 imageDiv">
+
+           <img class="img-fluid image p-4"  src="assets/Login-rafiki.png" alt="">
+        </div>
+
+
+        <div class="col-md-6 form-div text-center md-w-50 sm-w-100">
+
+            <form class="w-100 p-5" [formGroup]="loginForm" (ngSubmit)="login()">
+
+                <h2>
+                    Login
+                </h2>
+
+
+
+                <input type="text" formControlName="username" class="form-control m-2" formControlName="username" placeholder="user name">
+
+                <div style="position:relative;display: inline-block;" class="w-100">
+                    <input [type]="inputType" formControlName="password" class="form-control m-2" formControlName="password" placeholder="password">
+                    <button type="button"  style="border: none;background-color: transparent; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 1;" class="bg-light text-dark" (click)="inputType=='text'?inputType='password':inputType='text'"><i *ngIf="inputType!='password'" class="fa-regular fa-eye-slash"></i>   <i  *ngIf="inputType=='password'" class="fa-regular fa-eye"></i></button>
+                </div>
+
+                <div class="w-100 text-end mt-3">
+                    <button type="submit" class="btn btn-secondary login-btn ">Login</button>
+
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+
+
+</div>

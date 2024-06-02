@@ -1,0 +1,33 @@
+img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%
+
+}
+tr:nth-child(even){
+    background-color: antiquewhite;
+}
+
+.fa-user{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: gray;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fa-trash
+{
+  color: red;
+}
+.fa-pencil
+{
+color: rgb(76, 76, 246);
+}
+
+.mat-mdc-cell
+{
+  cursor: pointer;
+}

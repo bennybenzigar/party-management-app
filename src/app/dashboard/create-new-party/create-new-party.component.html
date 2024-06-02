@@ -1,0 +1,153 @@
+<div class="container">
+  <div class="row">
+    <div class="">
+      <div class="mb-2">
+        <button  class="btn ms-2 btn-info me-2 btn-sm" (click)="goBack()"> <i class="fas fa-chevron-left"></i></button>
+        <button class="btn btn-danger btn-sm" (click)="reset()"><i class="fa-solid fa-trash"> clear</i> </button>
+
+      </div>
+      <div class="card">
+
+        <div class="card-title">{{page}} New Party</div>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+<div class="row w-100">
+<div class="col-md-6">
+  <div class="form-group">
+    <label for="name">Name *</label>
+    <input type="text" formControlName="name" id="name" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label for="company_name">Company Name *</label>
+    <input type="text" formControlName="company_name" id="company_name" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label for="mobile_no">Mobile Number *</label>
+    <input type="number" formControlName="mobile_no" id="mobile_no" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label for="telephone_no">Telephone Number</label>
+    <input type="number" formControlName="telephone_no" id="telephone_no" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="whatsapp_no">WhatsApp Number</label>
+    <input type="number" formControlName="whatsapp_no" id="whatsapp_no" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" formControlName="email" id="email" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="remark">Remark</label>
+    <textarea formControlName="remark" id="remark" class="form-control" rows="3"></textarea>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" formControlName="login_access" id="login_access" class="form-check-input">
+    <label for="login_access" class="form-check-label">Login Access</label>
+  </div>
+  <div class="form-group">
+    <label for="date_of_birth">Date of Birth</label>
+    <input type="date" formControlName="date_of_birth" id="date_of_birth" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="anniversary_date">Anniversary Date</label>
+    <input type="date" formControlName="anniversary_date" id="anniversary_date" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="gstin">GSTIN</label>
+    <input type="text" formControlName="gstin" id="gstin" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="pan_no">PAN Number</label>
+    <input type="text" formControlName="pan_no" id="pan_no" class="form-control">
+  </div>
+  <div class="form-check">
+    <input type="checkbox" formControlName="apply_tds" id="apply_tds" class="form-check-input">
+    <label for="apply_tds" class="form-check-label">Apply TDS</label>
+  </div>
+  <div class="form-group">
+    <label for="credit_limit">Credit Limit</label>
+    <input type="number" formControlName="credit_limit" id="credit_limit" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="image">Image Upload</label>
+    <div class="custom-file">
+      <input type="file" (change)="onFileChange($event)" formControlName="image" id="image" class="custom-file-input">
+      <label class="custom-file-label" for="image">Choose file {{fileName}}</label>
+    </div>
+  </div>
+
+</div>
+<div class="col-md-6">
+  <div formArrayName="addresses">
+    <div *ngFor="let address of addresses.controls; let i = index" [formGroupName]="i">
+      <div class="form-group">
+        <label for="address_line_1{{ i }}">Address Line 1</label>
+        <input type="text" formControlName="address_line_1" id="address_line_1{{ i }}" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="address_line_2{{ i }}">Address Line 2</label>
+        <input type="text" formControlName="address_line_2" id="address_line_2{{ i }}" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="country{{ i }}">Country</label>
+        <input type="text" formControlName="country" id="country{{ i }}" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="state{{ i }}">State</label>
+        <input type="text" formControlName="state" id="state{{ i }}" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="city{{ i }}">City</label>
+        <input type="text" formControlName="city" id="city{{ i }}" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="pincode{{ i }}">Pincode</label>
+        <input type="number" formControlName="pincode" id="pincode{{ i }}" class="form-control" required>
+      </div>
+    </div>
+    <button type="button" (click)="addNewAddress()" class="btn btn-sm btn-primary float-right">Add Address</button>
+  </div>
+
+  <div formArrayName="banks ">
+    <div *ngFor="let bank of banks.controls; let i = index" [formGroupName]="i">
+      <div class="form-group">
+        <label for="bank_ifsc_code{{ i }}">Bank IFSC Code</label>
+        <input type="text" formControlName="bank_ifsc_code" id="bank_ifsc_code{{ i }}" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="bank_name{{ i }}">Bank Name</label>
+        <input type="text" formControlName="bank_name" id="bank_name{{ i }}" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="branch_name{{ i }}">Branch Name</label>
+        <input type="text" formControlName="branch_name" id="branch_name{{ i }}" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="account_no{{ i }}">Account Number</label>
+        <input type="number" formControlName="account_no" id="account_no{{ i }}" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="account_holder_name{{ i }}">Account Holder Name</label>
+        <input type="text" formControlName="account_holder_name" id="account_holder_name{{ i }}" class="form-control">
+      </div>
+    </div>
+  </div>
+  <button type="button" (click)="addNewBank()" class="btn btn-sm btn-primary float-right">Add Bank</button>
+
+</div>
+
+</div>
+
+
+
+        <!-- Addresses Form Array -->
+
+
+
+        <button type="submit" class="btn btn-primary btn-sm float-right">Submit</button>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>

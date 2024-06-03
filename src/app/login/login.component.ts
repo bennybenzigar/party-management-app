@@ -17,7 +17,7 @@ loginForm!:FormGroup
   constructor(private formBuilder:FormBuilder, private apiService:ApiService, private router:Router, private spinner:SpinnerService, private toastr:ToastrService){}
 
   ngOnInit(): void {
-    // localStorage.removeItem('token')
+    localStorage.removeItem('token')
     this.createForm()
   this.getLoginDetails()
 

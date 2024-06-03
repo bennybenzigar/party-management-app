@@ -163,7 +163,7 @@ export class CreateNewPartyComponent implements OnInit {
         this.apiService.editData(formData, this.id).subscribe(
           (response: any) => {
             this.spinner.hide();
-            this.toastr.success(response.msg);
+            this.toastr.success('updated successfully.');
             this.router.navigate(['/dashboard']);
           },
           (error) => {

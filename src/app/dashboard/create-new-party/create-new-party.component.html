@@ -109,7 +109,7 @@
     <button type="button" (click)="addNewAddress()" class="btn btn-sm btn-primary float-right">Add Address</button>
   </div>
 
-  <div formArrayName="banks ">
+  <div formArrayName="banks">
     <div *ngFor="let bank of banks.controls; let i = index" [formGroupName]="i">
       <div class="form-group">
         <label for="bank_ifsc_code{{ i }}">Bank IFSC Code</label>

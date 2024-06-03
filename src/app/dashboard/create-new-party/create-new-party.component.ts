@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
 import { SpinnerService } from 'src/app/service/spinner.service';
 import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-create-new-party',
   templateUrl: './create-new-party.component.html',
@@ -22,7 +23,8 @@ export class CreateNewPartyComponent implements OnInit {
   existingImageUrl: string | null = null;
   page: string = 'create';
   id!: number;
-fileName:string=''
+  fileName: string = '';
+
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
@@ -30,7 +32,8 @@ fileName:string=''
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
     private spinner: SpinnerService,
-    private router:Router, private location:Location
+    private router: Router,
+    private location: Location
   ) {
     this.form = this.fb.group({
       name: ['', Validators.required],
@@ -105,14 +108,10 @@ fileName:string=''
   }
 
   onSubmit() {
-
-    console.log(this.form.value,'f')
     if (!this.selectedFile) {
       this.toastr.info('Please select an image');
       return;
     }
-
-
 
     if (this.form.valid) {
       const formData = new FormData();
@@ -151,93 +150,65 @@ fileName:string=''
         this.apiService.postData(formData).subscribe(
           (response: any) => {
             this.spinner.hide();
-            console.log(response);
             this.toastr.success(response.msg);
-            // alert(response.msg);
-
             this.router.navigate(['/dashboard']);
           },
           (error) => {
             this.spinner.hide();
-
-            console.error('Error:', error);
-            if (error.error.gstin) {
-              this.toastr.error(error.error.gstin[0]);
-
-            }
-            else if (error.error.mobile_no) {
-              this.toastr.error(error.error.mobile_no[0]);
-
-            }
-            else if (error.error.email) {
-              this.toastr.error(error.error.email[0]);
-            }
-            else {
-              this.toastr.error(error.error.msg);
-
-            }
-
+            this.handleErrors(error);
           }
         );
       } else {
         this.spinner.show();
-
         this.apiService.editData(formData, this.id).subscribe(
           (response: any) => {
-            console.log(response);
-            // alert(response.msg);
             this.spinner.hide();
             this.toastr.success(response.msg);
             this.router.navigate(['/dashboard']);
           },
           (error) => {
             this.spinner.hide();
-
-            console.error('Error:', error);
-            if (error.error.gstin) {
-              this.toastr.error(error.error.gstin[0]);
-
-            }
-            else if (error.error.mobile_no) {
-              this.toastr.error(error.error.mobile_no[0]);
-
-            }
-            else if (error.error.email) {
-              this.toastr.error(error.error.email[0]);
-            }
-            else {
-              this.toastr.error(error.error.msg);
-
-            }
-
+            this.handleErrors(error);
           }
-
         );
       }
     } else {
-      // alert('Form is invalid. Please fill out all required fields.');
-
-      if (this.form.get('email')?.hasError('required')) {
-        this.toastr.error('Email is required.', 'Validation Error');
-      } else if (this.form.get('email')?.hasError('email')) {
-        this.toastr.error('Please enter a valid email address.', 'Validation Error');
-      }
-      if (this.form.get('mobile_no')?.hasError('required')) {
-        this.toastr.error('Mobile number is required.', 'Validation Error');
-      } else if (this.form.get('mobile_no')?.hasError('minlength') || this.form.get('mobile_no')?.hasError('maxlength')) {
-        this.toastr.error('Mobile number must be 10 digits long.', 'Validation Error');
-      }
-
-      if (this.form.get('pincode')?.hasError('required')) {
-        this.toastr.error('Pincode is required.', 'Validation Error');
-      } else if (this.form.get('pincode')?.hasError('minlength') || this.form.get('pincode')?.hasError('maxlength')) {
-        this.toastr.error('Pincode must be 6 digits long.', 'Validation Error');
-      }
-
-      this.toastr.info('Form is invalid. Please fill out all required fields.');
+      this.displayFormErrors();
     }
   }
 
+  handleErrors(error: any) {
+    if (error.error.gstin) {
+      this.toastr.error(error.error.gstin[0]);
+    } else if (error.error.mobile_no) {
+      this.toastr.error(error.error.mobile_no[0]);
+    } else if (error.error.email) {
+      this.toastr.error(error.error.email[0]);
+    } else {
+      this.toastr.error(error.error.msg);
+    }
+  }
+
+  displayFormErrors() {
+    if (this.form.get('email')?.hasError('required')) {
+      this.toastr.error('Email is required.', 'Validation Error');
+    } else if (this.form.get('email')?.hasError('email')) {
+      this.toastr.error('Please enter a valid email address.', 'Validation Error');
+    }
+    if (this.form.get('mobile_no')?.hasError('required')) {
+      this.toastr.error('Mobile number is required.', 'Validation Error');
+    } else if (this.form.get('mobile_no')?.hasError('minlength') || this.form.get('mobile_no')?.hasError('maxlength')) {
+      this.toastr.error('Mobile number must be 10 digits long.', 'Validation Error');
+    }
+
+    if (this.form.get('pincode')?.hasError('required')) {
+      this.toastr.error('Pincode is required.', 'Validation Error');
+    } else if (this.form.get('pincode')?.hasError('minlength') || this.form.get('pincode')?.hasError('maxlength')) {
+      this.toastr.error('Pincode must be 6 digits long.', 'Validation Error');
+    }
+
+    this.toastr.info('Form is invalid. Please fill out all required fields.');
+  }
 
   getParams() {
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -255,7 +226,6 @@ fileName:string=''
   getIndividualData(id: number) {
     this.spinner.show();
     this.apiService.getParty(id).subscribe(
-
       (response: any) => {
         this.spinner.hide();
         this.form.patchValue({
@@ -273,7 +243,6 @@ fileName:string=''
           pan_no: response.pan_no,
           apply_tds: response.apply_tds,
           credit_limit: response.credit_limit,
-          // image: response.image,
         });
 
         const addressArray = this.form.get('addresses') as FormArray;
@@ -294,7 +263,7 @@ fileName:string=''
 
         const bankArray = this.form.get('banks') as FormArray;
         bankArray.clear();
-        response.bank_id.forEach((bank: any) => {
+        response.bank.forEach((bank: any) => {
           bankArray.push(
             this.fb.group({
               id: bank.id,
@@ -307,23 +276,21 @@ fileName:string=''
           );
         });
 
-        console.log('f', this.form.value);
-
-        this.cdr.detectChanges();
+        this.existingImageUrl = response.image;
+        this.cdr.markForCheck();
       },
       (error) => {
         this.spinner.hide();
-        // console.error('Error:', error);
-        this.toastr.error(error.error.msg);
+        this.handleErrors(error);
       }
     );
   }
 
-
-  goBack(){
+  goBack() {
     this.location.back();
   }
-reset() {
-  this.form.reset()
-}
+
+  reset(){
+    this.form.reset()
+  }
 }
